@@ -1,0 +1,1 @@
+ansible-playbook -b -vvv -u centos deploy.yml  --extra-vars “app-server” -i hosts

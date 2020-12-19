@@ -1,0 +1,6 @@
+demo.pem
+terraform.exe
+.terraform/*
+.terraform*
+terraform*
+
