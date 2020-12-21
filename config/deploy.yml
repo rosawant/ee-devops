@@ -1,10 +1,12 @@
 ---
 - hosts: app-server
+  become: true
+  gather_facts: false
   tasks:
     - name: copy file to remote host
       copy:
         src: /mnt/artefact/
         dest: /mnt/artefact/
-        
+
     - name: Start application
-      shell: java -jar /mnt/artefact/*.jar
+      shell: nohup java -jar /mnt/artefact/*.jar 2>&1 &

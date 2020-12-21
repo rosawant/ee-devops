@@ -10,17 +10,17 @@ variable "ami" {
 		ap-south-1 = "ami-016ec067d44808c4f"
 	} 
 }
-variable "instance-jenkins" {
+variable "instance_jenkins" {
 	default = "t2.xlarge"
 }
-variable "instance-app" {
+variable "instance_app" {
     default = "t2.micro"
 }
 
-variable "jenkins-count" {
+variable "jenkins_count" {
 	default = "1"
 }
-variable "app-count" {
+variable "app_count" {
 	default = "1"
 }
 variable "pubkey" {

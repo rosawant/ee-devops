@@ -1,11 +1,6 @@
 pipeline {
     agent any
 
-    tools {
-        
-        maven "demo_maven_3.6.3"
-    }
-
     stages {
         stage('Git Pull ') {
             steps {
@@ -17,12 +12,17 @@ pipeline {
             steps {
                     sh "./mvnw package"
             }
+            
+        }
+      stage('Unit Tests') {
+            steps {
+                    sh "./mvnw test"
+            }
              post {
                 success {
                     sh "mv target/*.jar /mnt/artefact"
                 }
             }
         }
-     
     }
 }
