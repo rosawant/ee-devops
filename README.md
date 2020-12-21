@@ -1,9 +1,20 @@
-# pipeline-demo
+# ee-demo-tf
 
-1. Create VPC With pvt and public subnet with igw and nat in aws
-2. Install Jenkins
-3. install Ansible
-4. install java
-5. Create two vm one for jenkins and app server
-6. Jenkins Pipeline to build and save
-7. Ansible playbook to deploy in app server.
+Pre-Requisite:
+1. Create own ssh key for login.
+2. Update "env.tfvars" 
+
+# Terraform script will create below resource sin order
+1. Create VPC With private and public subnet with igw and nat gateway
+2. Create one jenkins master instance (Public Subnet) and one app server(private Subnet)
+3. Install Jenkins and ansible on jenkins master
+
+# Steps to execute
+/*
+terraform apply --var-file="env.tfvars"
+*/
+
+# Validation:
+1. Jenkins will run on http://<public ip>:8080/
+2. Create jenkins pipeline from Jenkinsfile present under config/Jenkinsfile
+3. Build job
