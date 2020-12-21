@@ -5,5 +5,6 @@
       copy:
         src: /mnt/artefact/
         dest: /mnt/artefact/
+        
     - name: Start application
-      shell: java -jar /mnt/artefact/*.jar &
+      shell: java -jar /mnt/artefact/*.jar
