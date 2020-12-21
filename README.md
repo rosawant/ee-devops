@@ -25,4 +25,8 @@ terraform apply --var-file="env.tfvars"
 1. Jenkins will run on http://public_ip:8080/
 2. Create jenkins job uding Jenkinsfile present under config/
 3. Build job- it will run maven build, unit tests and jar will be deployed using ansible 
+4. validate app using below command
+```
+curl -vvv http://<app_private_ip>:8080/
+```
 
