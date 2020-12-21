@@ -14,7 +14,7 @@ pipeline {
             }
             
         }
-      stage('Unit Tests') {
+        stage('Unit Tests') {
             steps {
                     sh "./mvnw test"
             }
@@ -23,6 +23,13 @@ pipeline {
                     sh "mv target/*.jar /mnt/artefact"
                 }
             }
+        }
+        stage('Deploy') {
+            steps {
+                    sh ".ansible-playbook -u centos /etc/ansible/deploy.yml  --extra-vars “app-server” -i hosts --private-key ~/.ssh/demo.pem
+"
+            }
+            
         }
     }
 }
