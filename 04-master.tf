@@ -1,7 +1,12 @@
 
 
+data "aws_ssm_parameter" "amazon_linux_ecs" {
+  name = "/aws/service/ecs/optimized-ami/amazon-linux-2/recommended/image_id"
+}
+
 resource "aws_instance" "jenkins" {
-	ami = "${lookup(var.ami, var.region)}"
+	#ami = "${lookup(var.ami, var.region)}"
+	ami = "${data.aws_ssm_parameter.amazon_linux_ecs.value}"
 	instance_type = "${var.instance_jenkins}"
 	count = "${var.jenkins_count}"
 	key_name      = "${var.key}"
@@ -44,7 +49,8 @@ resource "aws_instance" "jenkins" {
 
 
 resource "aws_instance" "app-server" {
-	ami = "${lookup(var.ami, var.region)}"
+	#ami = "${lookup(var.ami, var.region)}"
+	ami = "${data.aws_ssm_parameter.amazon_linux_ecs.value}"
 	instance_type = "${var.instance_app}"
 	count = "${var.app_count}"
 	key_name      = "${var.key}"

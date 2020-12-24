@@ -17,23 +17,23 @@ resource "aws_internet_gateway" "demo_igw" {
     Name = "ee-inet-gw"
   }
 }
+
 data "aws_availability_zones" "available" {
   state = "available"
 }
 
 resource "aws_subnet" "public_subnet" {
- 
   count                   = "${length(var.public_cidr_subnets)}"
   vpc_id                  = "${aws_vpc.vpc.id}"
   cidr_block              = "${element(var.public_cidr_subnets, count.index)}"
   map_public_ip_on_launch = "true"
-  availability_zone       = "${element(var.avalibility_zone, count.index)}"
+  # availability_zone       = "${element(var.avalibility_zone, count.index)}"
+  availability_zone = "${data.aws_availability_zones.available.names[count.index]}"
 
   tags = {
     Name = "ee-public-subnet"
   }
 }
-
 
 resource "aws_subnet" "private_subnet" {
   count             = "${length(var.private_cidr_subnets)}"
@@ -45,7 +45,7 @@ resource "aws_subnet" "private_subnet" {
     Name = "ee-private-subnet"
   }
 }
- 
+
 resource "aws_route_table" "public_route_table" {
   vpc_id = "${aws_vpc.vpc.id}"
 
@@ -84,7 +84,6 @@ resource "aws_route_table_association" "public" {
   route_table_id = "${aws_route_table.public_route_table.id}"
 }
 
-
 resource "aws_eip" "eip" {
   vpc = true
 }
@@ -99,8 +98,8 @@ resource "aws_nat_gateway" "nat_gateway" {
 ## Security Group Begin
 
 resource "aws_security_group" "public_sg" {
-  name_prefix   = "public-sg"
-  vpc_id = "${aws_vpc.vpc.id}"
+  name_prefix = "public-sg"
+  vpc_id      = "${aws_vpc.vpc.id}"
 
   ingress {
     description = "All"
@@ -122,10 +121,9 @@ resource "aws_security_group" "public_sg" {
   }
 }
 
-
 resource "aws_security_group" "private_sg" {
-  name_prefix   = "private-sg"
-  vpc_id = "${aws_vpc.vpc.id}"
+  name_prefix = "private-sg"
+  vpc_id      = "${aws_vpc.vpc.id}"
 
   egress {
     from_port   = 0
@@ -149,3 +147,4 @@ resource "aws_security_group_rule" "all_traffic_from_vpc" {
 }
 
 ##Security Group End ##
+
