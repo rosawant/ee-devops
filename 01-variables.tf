@@ -44,7 +44,3 @@ variable "public_cidr_subnets" {
  
 }
 
-variable "avalibility_zone" {
-  type    = "list"
-  default = ["us-east-1a", "us-east-1b", "us-east-1c", "us-east-1d"]
-}

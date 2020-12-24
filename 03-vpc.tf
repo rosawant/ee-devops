@@ -27,8 +27,7 @@ resource "aws_subnet" "public_subnet" {
   vpc_id                  = "${aws_vpc.vpc.id}"
   cidr_block              = "${element(var.public_cidr_subnets, count.index)}"
   map_public_ip_on_launch = "true"
-  # availability_zone       = "${element(var.avalibility_zone, count.index)}"
-  availability_zone = "${data.aws_availability_zones.available.names[count.index]}"
+  availability_zone       = "${data.aws_availability_zones.available.names[count.index]}"
 
   tags = {
     Name = "ee-public-subnet"
@@ -39,7 +38,7 @@ resource "aws_subnet" "private_subnet" {
   count             = "${length(var.private_cidr_subnets)}"
   vpc_id            = "${aws_vpc.vpc.id}"
   cidr_block        = "${element(var.private_cidr_subnets, count.index)}"
-  availability_zone = "${element(var.avalibility_zone, count.index)}"
+  availability_zone = "${data.aws_availability_zones.available.names[count.index]}"
 
   tags = {
     Name = "ee-private-subnet"
